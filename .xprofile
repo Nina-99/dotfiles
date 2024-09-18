@@ -1,0 +1,35 @@
+# Env vars
+export PATH=$HOME/.local/bin:$PATH
+export _JAVA_AWT_WM_NONREPARENTING=1
+export QT_STYLE_OVERRIDE=kvantum 
+
+# Screens
+hdmi=`xrandr | grep ' connected' | grep 'HDMI' | awk '{print $1}'`
+
+if [ "$hdmi" = "HDMI-1" ]; then
+  xrandr --output eDP-1 --mode 1366x768 --pos 0x770 --output HDMI-1 --primary --mode 1366x768 --pos 0x0 &
+else
+  xrandr --output eDP-1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output HDMI-1 --off --output DP-1 --off &
+fi
+
+# Composer
+picom &
+# Volumen
+volumeicon &
+# USB
+# Automount Devices
+udiskie -t &
+# Network
+nm-applet &
+# Batery
+cbatticon &
+# Keyboard Layout
+setxkbmap latam &
+# Java Fonts
+xsettingsd &
+# Wallpaper
+# nitrogen --restore &
+feh --bg-scale ~/.config/qtile/nina.jpeg
+# Overlay Bar
+xob-pulse-py | xob -s pulse &
+xob-brightness-js | xob -s brightness &
