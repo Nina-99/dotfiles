@@ -15,7 +15,8 @@ fi
 # Composer
 picom &
 # Volumen
-volumeicon &
+# volumeicon &
+pa-applet &
 # USB
 # Automount Devices
 udiskie -t &
