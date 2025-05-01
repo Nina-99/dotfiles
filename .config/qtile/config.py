@@ -71,6 +71,7 @@ keys = [
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     # PROGRAM
     # Browser
+    Key([mod, "control"], "f", lazy.spawn("proxychains firefox"), desc="Launch firefox"),
     Key([mod, "shift"], "f", lazy.spawn("firefox"), desc="Launch firefox"),
     # Code
     Key([mod, "shift"], "c", lazy.spawn("code"), desc="Launch code"),
@@ -138,27 +139,36 @@ for i, group in enumerate(groups):
     )
 
 layout_conf = {
-    # "border_focus": "#39FF14",
     "border_focus": "#39FF14",
-    "border_width": 1,
-    "margin": 6,
+    "border_width": 0,
+    "margin": 0,
     # 'margin_y' : 10
+}
+
+layout_tree = {
+    # "name": "NINA",
+    "active_bg": colors["color1"],
+    "bg_color": colors["grey"],
+    "border_width": 0,
+    "padding_left": 0,
+    "fontsize": 11,
+    "panel_width": 110,
 }
 
 layouts = [
     # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.MonadTall(**layout_conf),
+    # layout.MonadTall(**layout_conf),
     layout.Max(**layout_conf),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
+    # layout.Bsp(**layout_conf),
+    layout.Matrix(**layout_conf),
+    layout.MonadWide(**layout_conf),
+    # layout.RatioTile(**layout_conf),
+    # layout.Tile(**layout_conf),
+    # layout.tree.TreeTab(**layout_tree),
     # layout.VerticalTile(),
-    # layout.Zoomy(),
+    # layout.Zoomy(**layout_conf),
 ]
 
 widget_defaults = dict(
@@ -244,38 +254,38 @@ screens = [
             [
                 separator(),
                 widget.GroupBox(
-                    **base(fg='light'),
-                        font='victor-mono-nerd',
-                        fontsize=19,
-                        margin_y=3,
-                        margin_x=0,
-                        padding_y=8,
-                        padding_x=5,
-                        borderwidth=1,
-                        active=colors['active'],
-                        inactive=colors['inactive'],
-                        rounded=False,
-                        highlight_method='block',
-                        urgent_alert_method='block',
-                        urgent_border=colors['urgent'],
-                        this_current_screen_border=colors['focus'],
-                        this_screen_border=colors['grey'],
-                        other_current_screen_border=colors['dark'],
-                        other_screen_border=colors['dark'],
-                        disable_drag=True
+                    **base(fg="light"),
+                    font="victor-mono-nerd",
+                    fontsize=19,
+                    margin_y=3,
+                    margin_x=0,
+                    padding_y=8,
+                    padding_x=5,
+                    borderwidth=1,
+                    active=colors["active"],
+                    inactive=colors["inactive"],
+                    rounded=False,
+                    highlight_method="block",
+                    urgent_alert_method="block",
+                    urgent_border=colors["urgent"],
+                    this_current_screen_border=colors["focus"],
+                    this_screen_border=colors["grey"],
+                    other_current_screen_border=colors["dark"],
+                    other_screen_border=colors["dark"],
+                    disable_drag=True,
                 ),
                 separator(),
-                widget.WindowName(**base(fg='focus'), fontsize=14, padding=5),
+                widget.WindowName(**base(fg="focus"), fontsize=14, padding=5),
                 separator(),
-                powerline('color2', 'dark'),
-                widget.CurrentLayout(**base(bg='color2'), padding=1),
+                powerline("color2", "dark"),
+                widget.CurrentLayout(**base(bg="color2"), padding=1),
                 # powerline('color1', 'color2'),
                 # icon(bg="color1", fontsize=17, text=' '), # Icon: nf-mdi-calendar_clock
                 # widget.Clock(**base(bg='color1'), format="%d/%m/%Y %a %H:%M "),
                 # powerline('dark', 'color1'),
             ],
             24,
-            opacity = 0.75,
+            opacity=0.75,
         ),
     ),
 ]
@@ -337,4 +347,3 @@ wmname = "LG3D"
 def autostart():
     script = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.run([script])
-

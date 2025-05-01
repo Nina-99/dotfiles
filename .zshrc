@@ -79,8 +79,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
-	F-Sy-H
-	zsh-autosuggestions)
+    F-Sy-H
+    zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -112,12 +112,47 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+WM_VAR="/$ZELLIJ"
+# change with TMUX
+WM_CMD="zellij"
+# change with tmux
+
+function start_if_needed() {
+    if [[ $- == *i* ]] && [[ -z "${WM_VAR#/}" ]] && [[ -t 1 ]]; then
+       exec $WM_CMD
+    fi
+}
+
+# alias
+alias fzfbat='fzf --preview="bat --theme=gruvbox-dark --color=always {}"'
+alias fzfnvim='nvim $(fzf --preview="bat --theme=gruvbox-dark --color=always {}")'
+
 alias ls="lsd"
 alias cat="bat"
+
+source ~/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
 [ -f /opt/anaconda/etc/profile.d/conda.sh ] && source /opt/anaconda/etc/profile.d/conda.sh
 
+eval "$(zoxide init zsh)"
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+# Hitorial and autocomplet
+eval "$(atuin init zsh)"
+
+# starship
+eval "$(starship init zsh)"
+# eval "$(zellij setup --generate-auto-start zsh)"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Add ANACONDA to Path 
 PREFIX=/home/nina/anaconda
+export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
